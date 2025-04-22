@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0rem;
+    box-sizing: border-box;
+    font-family: "Roboto Slab", serif;
+}
+
+h1 {
+    text-align: center;
+    padding: 1.3rem;
+}
+
+.text {
+    text-align: center;
+    margin-bottom: 4.5rem;
+}
+
+main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    cursor: pointer;
+    padding: 0.8rem;
+    border: 0px;
+    border-radius: 5px;
+    margin-right: 0.4rem;
+}   
+
+input[type="text"], input[type="email"], input[type="date"], input[type='number'] {
+    cursor: text;
+    border: 0px;
+    border-radius: 5px;
+    margin-right: 0.4rem;
+    padding: 0.3rem;
+    width: 15rem;
+}
+
+.campo {
+    text-align: left;
+    margin-left: 2rem;
+    gap: 20px; 
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.botao_cadastrar {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+footer {
+    text-align: left;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+.mensagem-sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+  }

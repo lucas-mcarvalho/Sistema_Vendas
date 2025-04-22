@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Cadastrar pagamento de um pedido</h1>
+    </header>
+    <main>
+        <section>
+            <form>
+                <div class="campo">
+                    <label for="p15">Numero do pedido (id):</label>
+                    <input type="text" id="p15" name="pergunta15" placeholder="Digite o id do pedido">
+                </div>
+                <div class="campo">
+                    <label for="p17">Método de pagamento:</label><br>
+                    <input type="radio" id="p17a" name="pergunta17" value="Cartao de Credito">
+                    <label for="p17a">Cartão de Crédito</label><br>
+                    <input type="radio" id="p17b" name="pergunta17" value="Pix">
+                    <label for="p17b">Pix</label><br>
+                    <input type="radio" id="p17c" name="pergunta17" value="Boleto">
+                    <label for="p17c">Boleto</label><br>
+                    <input type="radio" id="p17d" name="pergunta17" value="Dinheiro">
+                    <label for="p17d">Dinheiro</label><br>
+                </div>
+                <div class="campo">
+                    <label for="p18">Status do pagamento:</label><br>
+                    <input type="radio" id="p18a" name="pergunta18" value="Pendente">
+                    <label for="p18a">Pendente</label><br>
+                    <input type="radio" id="p18b" name="pergunta18" value="Pago">
+                    <label for="p18b">Pago</label><br>
+                    <input type="radio" id="p18c" name="pergunta18" value="Cancelado">
+                    <label for="p18c">Cancelado</label><br>
+                </div>
+                <div class="campo">
+                    <label for="p19">Valor:</label>
+                    <input type="text" id="p19" name="pergunta19" placeholder="Digite o total do pedido">
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <button class="botao_cadastrar">Cadastrar</button>
+
+    <footer>
+        <a href="index.html" target="_self">
+            Voltar a pagina inicial.
+        </a>
+    </footer>
+    
+</body>
+</html>
