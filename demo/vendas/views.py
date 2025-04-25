@@ -183,3 +183,36 @@ def adicionar_itens(request, id_pedido):
         'itens': itens
     })
 
+def olhar_tabelas(request):
+    return render(request, 'vendas/olhar_tabelas.html')
+
+def ver_clientes(request):
+    clientes = Cliente.objects.all()
+
+    return render(request, 'vendas/ver_clientes.html', {
+        'clientes': clientes
+    })
+
+
+def ver_pedidos(request):
+    pedidos = Pedido.objects.all()
+    dados = []
+
+    for pedido in pedidos:
+        cliente = pedido.idcliente
+        itens = Itens_Pedido.objects.filter(idpedido=pedido)
+        pagamento = Pagamento.objects.filter(idpedido=pedido).first()  # pode não existir ainda
+
+        for item in itens:
+            dados.append({
+                'id_pedido': pedido.id_pedido,
+                'nome_cliente': cliente.nome,
+                'data_pedido': pedido.data_pedido,
+                'id_produto': item.idproduto.id_produto,
+                'quantidade': item.quantidade,
+                'metodo_pagamento': pagamento.metodo_de_pagamento if pagamento else '---',
+                'status_pagamento': pagamento.status_pagamento if pagamento else '---',
+                'total': pedido.total
+            })
+
+    return render(request, 'vendas/ver_pedidos.html', {'dados': dados})

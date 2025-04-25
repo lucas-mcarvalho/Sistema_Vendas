@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Tabelas</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Visualizar Tabelas</h1>
+    </header>
+    <main>
+        <p class="text">Clique em um desse botões para analisar o que você deseja:</p>
+        <section>
+            <a href="{% url 'ver_clientes' %}"><button>Cliente</button></a>
+            <a href="{% url 'ver_pedidos' %}"><button>Pedido</button></a>
+            <button>Fornecedor</button>
+            <button>Produtos</button>
+        </section>
+    </main>
+
+    <footer>
+        <a href="{% url 'index' %}">Voltar a pagina inicial.</a>
+    </footer>
+</body>
+</html>

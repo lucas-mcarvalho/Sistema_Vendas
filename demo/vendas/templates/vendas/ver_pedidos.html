@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pedidos</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Lista de Pedidos</h1>
+    </header>
+    <main>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Data</th>
+                    <th>ID Produto</th>
+                    <th>Quantidade</th>
+                    <th>Método de Pagamento</th>
+                    <th>Status de Pagamento</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for linha in dados %}
+                <tr>
+                    <td>{{ linha.id_pedido }}</td>
+                    <td>{{ linha.nome_cliente }}</td>
+                    <td>{{ linha.data_pedido }}</td>
+                    <td>{{ linha.id_produto }}</td>
+                    <td>{{ linha.quantidade }}</td>
+                    <td>{{ linha.metodo_pagamento }}</td>
+                    <td>{{ linha.status_pagamento }}</td>
+                    <td>R$ {{ linha.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
