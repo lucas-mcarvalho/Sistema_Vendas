@@ -204,7 +204,7 @@ def ver_pedidos(request):
         pagamento = Pagamento.objects.filter(idpedido=pedido).first()  # pode não existir ainda
 
         for item in itens:
-            dados.append({
+            dados.append({ 
                 'id_pedido': pedido.id_pedido,
                 'nome_cliente': cliente.nome,
                 'data_pedido': pedido.data_pedido,
