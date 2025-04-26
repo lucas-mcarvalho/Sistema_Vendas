@@ -11,5 +11,7 @@ urlpatterns = [
     path('olhar_tabelas', views.olhar_tabelas, name='olhar_tabelas'),
     path('ver_clientes', views.ver_clientes, name='ver_clientes'),
     path('ver_pedidos', views.ver_pedidos, name='ver_pedidos'),
+    path('ver_fornecedores', views.ver_fornecedores, name='ver_fornecedores'),
+    path('ver_produtos', views.ver_produtos, name='ver_produtos'),
     path('', views.index, name='index'),
 ]

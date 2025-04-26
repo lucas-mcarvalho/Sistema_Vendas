@@ -208,7 +208,7 @@ def ver_pedidos(request):
                 'id_pedido': pedido.id_pedido,
                 'nome_cliente': cliente.nome,
                 'data_pedido': pedido.data_pedido,
-                'id_produto': item.idproduto.id_produto,
+                'id_produto': item.idproduto.nome_produto,
                 'quantidade': item.quantidade,
                 'metodo_pagamento': pagamento.metodo_de_pagamento if pagamento else '---',
                 'status_pagamento': pagamento.status_pagamento if pagamento else '---',
@@ -216,3 +216,17 @@ def ver_pedidos(request):
             })
 
     return render(request, 'vendas/ver_pedidos.html', {'dados': dados})
+
+def ver_fornecedores(request):
+    fornecedores = Fornecedor.objects.all()
+
+    return render(request, 'vendas/ver_fornecedores.html', {
+        'fornecedores': fornecedores
+    })
+
+def ver_produtos(request):
+    produtos = Produto.objects.all()
+
+    return render(request, 'vendas/ver_produtos.html', {
+        'produtos': produtos
+    })
