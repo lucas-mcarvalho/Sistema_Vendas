@@ -1,9 +1,28 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Cliente, Pedido, Fornecedor, Produto, Pagamento, Itens_Pedido
+from django.shortcuts import render, get_object_or_404, redirect
 
 def index(request):
     return render(request, 'vendas/index.html')
+
+def gerenciar_clientes(request):
+    clientes = Cliente.objects.all()
+
+    if request.method == 'POST':
+        # Obter o ID do cliente a ser deletado
+        id_cliente = request.POST.get('id_cliente')
+        print(f'ID do Cliente para Deletar: {id_cliente}')
+        
+        # Verificar se o id_cliente foi passado
+        if id_cliente:
+            cliente = get_object_or_404(Cliente, id=id_cliente)
+            cliente.delete()  # Deleta o cliente no banco de dados
+
+            # Após deletar, redireciona para a mesma página
+            return redirect('gerenciar_clientes')
+
+    return render(request, 'vendas/gerenciar_clientes.html', {'clientes': clientes})
 
 def cadastro_cliente(request):
     if request.method == 'POST':
