@@ -8,23 +8,20 @@ def index(request):
 
 def gerenciar_clientes(request):
     clientes = Cliente.objects.all()
-
     if request.method == 'POST':
         # Obter o ID do cliente a ser deletado
         id_cliente = request.POST.get('id_cliente')
-        print(f'ID do Cliente para Deletar: {id_cliente}')
-        
         # Verificar se o id_cliente foi passado
         if id_cliente:
-            cliente = get_object_or_404(Cliente, id=id_cliente)
-            cliente.delete()  # Deleta o cliente no banco de dados
-
+            cliente = get_object_or_404(Cliente, id_cliente=id_cliente)
+            cliente.delete()  # Deleta o cliente no banco de dados            
             # Após deletar, redireciona para a mesma página
             return redirect('gerenciar_clientes')
 
     return render(request, 'vendas/gerenciar_clientes.html', {'clientes': clientes})
 
 def cadastro_cliente(request):
+    print(request.POST)
     if request.method == 'POST':
         nome = request.POST.get('nome')
         cpf = request.POST.get('cpf')
@@ -99,7 +96,7 @@ def registrar_novo_pedido(request):
             pedido.save()
 
             sucesso = True
-            id_pedido = pedido.id_pedido
+            id_pedido = pedido.id_pedido_pedidos
 
             return render(request, 'vendas/registrar_novo_pedido.html', {
                 'clientes': clientes,

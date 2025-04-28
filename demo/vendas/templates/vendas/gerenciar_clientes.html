@@ -3,17 +3,13 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Clientes</title>
-    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Lista de Clientes</h1>
-    </header>
-    <main>
-        {% if clientes %}
-        <table border="1">
+    <h1>Lista de Clientes</h1>
+
+    {% if clientes %}
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -26,15 +22,14 @@
             <tbody>
                 {% for cliente in clientes %}
                 <tr>
-                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.id_cliente }}</td>
                     <td>{{ cliente.nome }}</td>
                     <td>{{ cliente.email }}</td>
                     <td>{{ cliente.telefone }}</td>
                     <td>
-                        <!-- Formulário para deletar o cliente -->
                         <form method="POST">
                             {% csrf_token %}
-                            <input type="hidden" name="id_cliente" value="{{ cliente.id }}">
+                            <input type="hidden" name="id_cliente" value="{{ cliente.id_cliente }}">
                             <button type="submit">Deletar</button>
                         </form>
                     </td>
@@ -42,12 +37,10 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% else %}
-            <p>Nenhum cliente cadastrado.</p>
-        {% endif %}
+    {% else %}
+        <p>Nenhum cliente cadastrado.</p>
+    {% endif %}
 
-        <br>
-        <a href="{% url 'index' %}"><button>Voltar ao Menu</button></a>
-    </main>
+    <p><a href="{% url 'index' %}">Voltar ao Menu</a></p>
 </body>
 </html>

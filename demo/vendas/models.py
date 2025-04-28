@@ -67,29 +67,27 @@ class Produto(models.Model):
         return f"({self.id_produto}) {self.nome_produto}: Preco: {self.preco} Estoque: {self.estoque}"
     
 class Itens_Pedido(models.Model):
-    id = models.AutoField(primary_key=True)
+    id_itens_pedido = models.AutoField(primary_key=True)  # Definindo explicitamente a chave primária
     idpedido = models.ForeignKey(
         Pedido,
         on_delete=models.CASCADE,
-        db_column='idpedido'
+        db_column='idpedido'  # Nome da coluna no banco de dados
     )
 
     idproduto = models.ForeignKey(
         Produto,
         on_delete=models.CASCADE,
-        db_column='idproduto'
+        db_column='idproduto'  # Nome da coluna no banco de dados
     )
 
     quantidade = models.IntegerField()
 
     class Meta:
-        managed = False
-        db_table = 'itens_pedido'
+        managed = False  # Indica que a tabela já existe no banco de dados
+        db_table = 'itens_pedido'  # Nome da tabela no banco de dados
 
     def __str__(self):
         return f"Pedido: {self.idpedido} Produto: {self.idproduto} Quantidade: {self.quantidade}"
-
-    
 class Pagamento(models.Model):
     METODO_PAGAMENTO_CHOICES = [
         ('Cartão de Crédito', 'Cartão de Crédito'),
