@@ -18,7 +18,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Email</th>
+                    <th>CPF</th>
                     <th>Telefone</th>
                     <th>Ações</th>
                 </tr>
@@ -26,9 +26,9 @@
             <tbody>
                 {% for cliente in clientes %}
                 <tr>
-                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.id_cliente }}</td>
                     <td>{{ cliente.nome }}</td>
-                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.cpf }}</td>
                     <td>{{ cliente.telefone }}</td>
                     <td>
                         <!-- Formulário para deletar o cliente -->
