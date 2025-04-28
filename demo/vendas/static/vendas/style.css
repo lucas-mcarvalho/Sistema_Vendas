@@ -52,6 +52,7 @@ input[type="text"], input[type="email"], input[type="date"], input[type='number'
     margin-left: 2rem;
     margin-bottom: 2rem;
     text-align: left;
+    float: left;
 }
 
 footer {
@@ -72,4 +73,5 @@ footer {
 table {
     width: 80%;
     margin: 0 auto;
+    text-align: center;
 }

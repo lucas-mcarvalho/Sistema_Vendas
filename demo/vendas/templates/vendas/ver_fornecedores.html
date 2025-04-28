@@ -16,14 +16,16 @@
             <table border="1">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Telefone</th>
-                    </tr>
+                    </tr>   
                 </thead>
                 <tbody>
                     {% for fornecedor in fornecedores %}
                     <tr>
+                        <td>{{ fornecedor.id_fornecedor }}</td>
                         <td>{{ fornecedor.nome_fornecedor }}</td>
                         <td>{{ fornecedor.email }}</td>
                         <td>{{ fornecedor.telefone_fornecedor }}</td>

@@ -17,6 +17,7 @@
             <table border="1">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nome do Produto</th>
                         <th>Fornecedor</th>
                         <th>Estoque</th>
@@ -26,10 +27,11 @@
                 <tbody>
                     {% for produto in produtos %}
                     <tr>
+                        <th>{{ produto.id_produto }}</th>
                         <th>{{ produto.nome_produto }}</th>
                         <th>{{ produto.idfornecedor.nome_fornecedor }}</th>
                         <th>{{ produto.estoque }}</th>
-                        <th>{{ produto.preco }}</th>
+                        <th>R$ {{ produto.preco }}</th>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -40,13 +40,14 @@ create table produtos(
 	foreign key(idfornecedor) references fornecedor(id_fornecedor)
 );
 
-create table itens_pedido(
-	idpedido integer not null,
-	idproduto integer not null,
-	quantidade integer,
+create table itens_pedido (
+    id_itens_pedido serial primary key,
+    idpedido integer not null,
+    idproduto integer not null,
+    quantidade integer,
 
-	foreign key (idpedido) references pedidos(id_pedido),
-	foreign key (idproduto) references produtos(id_produto)
+    foreign key (idpedido) references pedidos(id_pedido),
+    foreign key (idproduto) references produtos(id_produto)
 );
 
 create table pagamento(
