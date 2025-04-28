@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Gerenciar Clientes</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
 </head>
 <body>
     <h1>Lista de Clientes</h1>
@@ -14,7 +15,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Email</th>
+                    <th>CPF</th>
                     <th>Telefone</th>
                     <th>Ações</th>
                 </tr>
@@ -24,7 +25,7 @@
                 <tr>
                     <td>{{ cliente.id_cliente }}</td>
                     <td>{{ cliente.nome }}</td>
-                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.cpf }}</td>
                     <td>{{ cliente.telefone }}</td>
                     <td>
                         <form method="POST">
