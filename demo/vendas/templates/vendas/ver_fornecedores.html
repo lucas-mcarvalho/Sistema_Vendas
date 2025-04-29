@@ -20,6 +20,7 @@
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Telefone</th>
+                        <th>Ações</th>
                     </tr>   
                 </thead>
                 <tbody>
@@ -29,6 +30,18 @@
                         <td>{{ fornecedor.nome_fornecedor }}</td>
                         <td>{{ fornecedor.email }}</td>
                         <td>{{ fornecedor.telefone_fornecedor }}</td>
+                        <td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id_fornecedor" value="{{ fornecedor.id_fornecedor }}">
+                                <select name="acao">
+                                    <option value="none">Nenhum</option>
+                                    <option value="editar">Editar</option>
+                                    <option value="deletar">Deletar</option>
+                                </select>
+                                <button type="submit">Confirmar</button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

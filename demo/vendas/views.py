@@ -218,6 +218,17 @@ def ver_pedidos(request):
     return render(request, 'vendas/ver_pedidos.html', {'dados': dados})
 
 def ver_fornecedores(request):
+    if request.method == 'POST':
+        acao = request.POST.get("acao")
+        id_fornecedor = request.POST.get("id_fornecedor")
+
+        if acao == 'editar':
+            return redirect('editar_fornecedor', id=id_fornecedor)
+        elif acao == 'deletar':
+            fornecedor = get_object_or_404(Fornecedor, pk=id_fornecedor)
+            fornecedor.delete()
+            return redirect('ver_fornecedores')
+
     fornecedores = Fornecedor.objects.all()
 
     return render(request, 'vendas/ver_fornecedores.html', {
@@ -225,6 +236,18 @@ def ver_fornecedores(request):
     })
 
 def ver_produtos(request):
+    if request.method == 'POST':
+        acao = request.POST.get("acao")
+        id_produto = request.POST.get("id_produto")
+
+        if acao == 'editar':
+            return redirect('editar_produtos', id=id_produto)
+        elif acao == 'deletar':
+            produto = get_object_or_404(Produto, pk=id_produto)
+            produto.delete()
+            return redirect('ver_produtos')
+
+
     produtos = Produto.objects.all()
 
     return render(request, 'vendas/ver_produtos.html', {
@@ -245,3 +268,39 @@ def gerenciar_clientes(request):
             return redirect('gerenciar_clientes')
 
     return render(request, 'vendas/gerenciar_clientes.html', {'clientes': clientes})
+
+def editar_fornecedor(request, id):
+    fornecedor = get_object_or_404(Fornecedor, pk=id)
+    sucesso = False
+
+    if request.method == 'POST':
+        fornecedor.nome_fornecedor = request.POST.get('nome_fornecedor')
+        fornecedor.email = request.POST.get('email')
+        fornecedor.telefone_fornecedor = request.POST.get('telefone_fornecedor')
+        fornecedor.save()
+        sucesso = True
+
+    return render(request, 'vendas/editar_fornecedor.html', {
+        'fornecedor': fornecedor,
+        'sucesso': sucesso
+    })
+
+
+def editar_produtos(request, id):
+    produto = get_object_or_404(Produto, pk=id)
+    fornecedores = Fornecedor.objects.all()  # ADICIONADO
+    sucesso = False
+
+    if request.method == 'POST':
+        produto.nome_produto = request.POST.get('nome_produto')
+        produto.idfornecedor = get_object_or_404(Fornecedor, pk=request.POST.get('idfornecedor'))
+        produto.estoque = request.POST.get('estoque')
+        produto.preco = request.POST.get('preco')
+        produto.save()
+        sucesso = True
+
+    return render(request, 'vendas/editar_produtos.html', {
+        'produto': produto,
+        'fornecedores': fornecedores,  # ADICIONADO
+        'sucesso': sucesso
+    })

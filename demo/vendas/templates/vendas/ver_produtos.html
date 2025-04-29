@@ -22,16 +22,29 @@
                         <th>Fornecedor</th>
                         <th>Estoque</th>
                         <th>Preço</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for produto in produtos %}
                     <tr>
-                        <th>{{ produto.id_produto }}</th>
-                        <th>{{ produto.nome_produto }}</th>
-                        <th>{{ produto.idfornecedor.nome_fornecedor }}</th>
-                        <th>{{ produto.estoque }}</th>
-                        <th>R$ {{ produto.preco }}</th>
+                        <td>{{ produto.id_produto }}</td>
+                        <td>{{ produto.nome_produto }}</td>
+                        <td>{{ produto.idfornecedor.nome_fornecedor }}</td>
+                        <td>{{ produto.estoque }}</td>
+                        <td>R$ {{ produto.preco }}</td>
+                        <td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id_produto" value="{{ produto.id_produto }}">
+                                <select name="acao">
+                                    <option value="none">Nenhum</option>
+                                    <option value="editar">Editar</option>
+                                    <option value="deletar">Deletar</option>
+                                </select>
+                                <button type="submit">Confirmar</button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
