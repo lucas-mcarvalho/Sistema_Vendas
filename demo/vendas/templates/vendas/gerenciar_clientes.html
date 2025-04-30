@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Gerenciar Clientes</title>
     <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+   
+         
+    </script>
 </head>
 <body>
     <h1>Lista de Clientes</h1>
@@ -28,10 +31,14 @@
                     <td>{{ cliente.cpf }}</td>
                     <td>{{ cliente.telefone }}</td>
                     <td>
-                        <form method="POST">
+                        <form method="POST" action="{% url 'gerenciar_clientes' %}" onsubmit="confirmarAcao(event, this.acao.value)">
                             {% csrf_token %}
                             <input type="hidden" name="id_cliente" value="{{ cliente.id_cliente }}">
-                            <button type="submit">Deletar</button>
+                            <select name="acao">
+                                <option value="editar">Editar</option>
+                                <option value="deletar">Deletar</option>
+                            </select>
+                            <button type="submit">Executar</button>
                         </form>
                     </td>
                 </tr>
