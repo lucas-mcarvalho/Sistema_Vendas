@@ -280,7 +280,7 @@ def editar_cliente(request, id_cliente):
         cliente.save()
         return redirect('editar_cliente', id_cliente=cliente.id_cliente)  # redireciona para a mesma página
 
-    return render(request, 'vendas/editar_cliente.html', {'cliente': cliente})
+    return render(request, 'vendas/editar_cliente.html', {'cliente': cliente ,'sucesso':True})
 def editar_fornecedor(request, id):
     fornecedor = get_object_or_404(Fornecedor, pk=id)
     sucesso = False
