@@ -259,16 +259,28 @@ def gerenciar_clientes(request):
     clientes = Cliente.objects.all()
     if request.method == 'POST':
         # Obter o ID do cliente a ser deletado
+        acao = request.POST['acao']
         id_cliente = request.POST.get('id_cliente')
         # Verificar se o id_cliente foi passado
+        if acao == 'editar':
+            return redirect('editar_cliente',id_cliente =id_cliente)
         if id_cliente:
             cliente = get_object_or_404(Cliente, id_cliente=id_cliente)
             cliente.delete()  # Deleta o cliente no banco de dados            
             # Após deletar, redireciona para a mesma página
-            return redirect('gerenciar_clientes')
-
     return render(request, 'vendas/gerenciar_clientes.html', {'clientes': clientes})
 
+
+def editar_cliente(request, id_cliente):
+    cliente = get_object_or_404(Cliente, pk=id_cliente)
+    if request.method == 'POST':
+        cliente.nome = request.POST['nome']
+        cliente.cpf = request.POST['cpf']
+        cliente.telefone = request.POST['telefone']
+        cliente.save()
+        return redirect('editar_cliente', id_cliente=cliente.id_cliente)  # redireciona para a mesma página
+
+    return render(request, 'vendas/editar_cliente.html', {'cliente': cliente})
 def editar_fornecedor(request, id):
     fornecedor = get_object_or_404(Fornecedor, pk=id)
     sucesso = False
