@@ -272,15 +272,20 @@ def gerenciar_clientes(request):
 
 
 def editar_cliente(request, id_cliente):
+    sucesso = False
     cliente = get_object_or_404(Cliente, pk=id_cliente)
+
     if request.method == 'POST':
         cliente.nome = request.POST['nome']
         cliente.cpf = request.POST['cpf']
         cliente.telefone = request.POST['telefone']
         cliente.save()
-        return redirect('editar_cliente', id_cliente=cliente.id_cliente)  # redireciona para a mesma página
+        sucesso = True
+        return render(request, 'vendas/editar_cliente.html', {'cliente': cliente ,'sucesso': sucesso}) # redireciona para a mesma página
 
-    return render(request, 'vendas/editar_cliente.html', {'cliente': cliente ,'sucesso':True})
+    return render(request, 'vendas/editar_cliente.html', {'cliente': cliente ,'sucesso': sucesso})
+
+
 def editar_fornecedor(request, id):
     fornecedor = get_object_or_404(Fornecedor, pk=id)
     sucesso = False
@@ -331,7 +336,10 @@ def escolher_acao_pedido(request, id_pedido):
     return redirect('ver_pedidos')  # Caso o método não seja POST, redireciona de volta
 
 def editar_pedido(request, id):
+    sucesso = False
     pedido = get_object_or_404(Pedido, id_pedido=id)
+    item_pedido = Itens_Pedido.objects.filter(idpedido=pedido).first()
+    itens_pedido = Itens_Pedido.objects.filter(idpedido=pedido)
     clientes = Cliente.objects.all()
     produtos = Produto.objects.all()
 
@@ -360,6 +368,16 @@ def editar_pedido(request, id):
         else:
             quantidade = 1  # Valor padrão
 
+        # Buscar método de pagamento
+        metodo_pagamento = request.POST.get("metodo_pagamento")
+        if metodo_pagamento:
+            pedido.metodo_pagamento = metodo_pagamento
+
+        # Buscar status de pagamento
+        status_pagamento = request.POST.get("status_pagamento")
+        if status_pagamento:
+            pedido.status_pagamento = status_pagamento
+
         # Atualizar ou criar item de pedido
         if produto:
             item_pedido = Itens_Pedido.objects.filter(idpedido=pedido).first()
@@ -374,26 +392,38 @@ def editar_pedido(request, id):
                     quantidade=quantidade
                 )
 
-        # Validar e atribuir data e total
+        # Validar e atribuir data
         data_pedido = request.POST.get("data_pedido")
-        total = request.POST.get("total")
-
-        if data_pedido and total:
+        if data_pedido:
             pedido.data_pedido = data_pedido
-            pedido.total = total
         else:
-            print("Erro: Data do pedido ou total não fornecido.")
+            print("Erro: Data do pedido não fornecida.")
+
+        # Calcular total
+        if produto and quantidade:
+            pedido.total = produto.preco * quantidade
 
         try:
             pedido.save()
+            sucesso = True
             print("Pedido salvo com sucesso.")
         except Exception as e:
             print(f"Erro ao salvar o pedido: {e}")
 
-        return redirect("ver_pedidos")
+        return render(request, "vendas/editar_pedido.html", {
+            "pedido": pedido,
+            "clientes": clientes,
+            "itens_pedido": itens_pedido,
+            "produtos": produtos,
+            'sucesso': sucesso
+        })
 
     return render(request, "vendas/editar_pedido.html", {
         "pedido": pedido,
         "clientes": clientes,
         "produtos": produtos,
+        "quantidade": item_pedido.quantidade if item_pedido else '',
+        "id_produto": item_pedido.idproduto.id_produto if item_pedido else '',
+        "itens_pedido": itens_pedido,
+        'sucesso': sucesso
     })

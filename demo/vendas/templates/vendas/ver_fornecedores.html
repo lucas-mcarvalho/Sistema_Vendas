@@ -35,11 +35,10 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="id_fornecedor" value="{{ fornecedor.id_fornecedor }}">
                                 <select name="acao">
-                                    <option value="none">Nenhum</option>
                                     <option value="editar">Editar</option>
                                     <option value="deletar">Deletar</option>
                                 </select>
-                                <button type="submit">Confirmar</button>
+                                <button type="submit">Executar Ação</button>
                             </form>
                         </td>
                     </tr>
