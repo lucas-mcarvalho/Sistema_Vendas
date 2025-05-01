@@ -316,3 +316,84 @@ def editar_produtos(request, id):
         'fornecedores': fornecedores,  # ADICIONADO
         'sucesso': sucesso
     })
+    
+    
+def escolher_acao_pedido(request, id_pedido):
+    if request.method == 'POST':
+        acao = request.POST.get('acao')
+        if acao == 'editar':
+            return redirect('editar_pedido', id=id_pedido)
+        elif acao == 'deletar':
+            # Corrigir o uso do id_pedido
+            pedido = get_object_or_404(Pedido, id_pedido=id_pedido)
+            pedido.delete()
+            return redirect('ver_pedidos')  # Aqui você pode ajustar a URL conforme necessário
+    return redirect('ver_pedidos')  # Caso o método não seja POST, redireciona de volta
+
+def editar_pedido(request, id):
+    pedido = get_object_or_404(Pedido, id_pedido=id)
+    clientes = Cliente.objects.all()
+    produtos = Produto.objects.all()
+
+    if request.method == "POST":
+        print("Requisição POST recebida.")
+
+        # Buscar cliente
+        try:
+            cliente = Cliente.objects.get(id_cliente=request.POST["nome_cliente"])
+            pedido.idcliente = cliente
+        except Cliente.DoesNotExist:
+            print("Cliente não encontrado.")
+            cliente = None
+
+        # Buscar produto
+        try:
+            produto = Produto.objects.get(id_produto=request.POST["id_produto"])
+        except Produto.DoesNotExist:
+            print("Produto não encontrado.")
+            produto = None
+
+        # Validar e atribuir quantidade
+        quantidade = request.POST.get("quantidade")
+        if quantidade and quantidade.isdigit():
+            quantidade = int(quantidade)
+        else:
+            quantidade = 1  # Valor padrão
+
+        # Atualizar ou criar item de pedido
+        if produto:
+            item_pedido = Itens_Pedido.objects.filter(idpedido=pedido).first()
+            if item_pedido:
+                item_pedido.idproduto = produto
+                item_pedido.quantidade = quantidade
+                item_pedido.save()
+            else:
+                Itens_Pedido.objects.create(
+                    idpedido=pedido,
+                    idproduto=produto,
+                    quantidade=quantidade
+                )
+
+        # Validar e atribuir data e total
+        data_pedido = request.POST.get("data_pedido")
+        total = request.POST.get("total")
+
+        if data_pedido and total:
+            pedido.data_pedido = data_pedido
+            pedido.total = total
+        else:
+            print("Erro: Data do pedido ou total não fornecido.")
+
+        try:
+            pedido.save()
+            print("Pedido salvo com sucesso.")
+        except Exception as e:
+            print(f"Erro ao salvar o pedido: {e}")
+
+        return redirect("ver_pedidos")
+
+    return render(request, "vendas/editar_pedido.html", {
+        "pedido": pedido,
+        "clientes": clientes,
+        "produtos": produtos,
+    })
