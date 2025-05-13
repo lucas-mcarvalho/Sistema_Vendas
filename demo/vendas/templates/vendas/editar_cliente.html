@@ -8,35 +8,32 @@
 </head>
 <body>
     <h1>Editar Cliente</h1>
+    <main>
+        <form method="POST" action="{% url 'editar_cliente' cliente.id_cliente %}">
+            {% csrf_token %}
+            <div class="campo">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" value="{{ cliente.nome }}" required>
+            </div>
 
-    <form method="POST" action="{% url 'editar_cliente' cliente.id_cliente %}">
-        {% csrf_token %}
-        <div>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="{{ cliente.nome }}" required>
-        </div>
+            <div class="campo">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" value="{{ cliente.cpf }}" required>
+            </div>
 
-        <div>
-            <label for="cpf">CPF:</label>
-            <input type="text" id="cpf" name="cpf" value="{{ cliente.cpf }}" required>
-        </div>
+            <div class="campo">
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" value="{{ cliente.telefone }}" required>
+            </div>
 
-        <div>
-            <label for="telefone">Telefone:</label>
-            <input type="text" id="telefone" name="telefone" value="{{ cliente.telefone }}" required>
-        </div>
-
-        <div>
-            <button type="submit">Salvar alterações</button>
-        </div>
-    </form>
+            <div class="campo">
+                <button type="submit">Salvar alterações</button>
+            </div>
+        </form>
+    </main>
 
     <footer>
         <a href="{% url 'gerenciar_clientes' %}">Voltar à lista de clientes</a>
     </footer>
-
-   
-
-    
 </body>
 </html>

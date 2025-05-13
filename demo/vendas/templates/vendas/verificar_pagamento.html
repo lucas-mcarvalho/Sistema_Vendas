@@ -84,11 +84,9 @@
         </section>
     </main>
 
-    <footer>
-        <a href="{% url 'index' %}" target="_self">
-            Voltar a pagina inicial.
-        </a>
-    </footer>
+    <div class='campo'>
+        <a href="{% url 'adicionar_itens' pedido.id_pedido %}">Voltar à página anterior</a>
+    </div>
     
 </body>
 </html>

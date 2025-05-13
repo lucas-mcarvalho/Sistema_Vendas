@@ -5,52 +5,51 @@
     <meta charset="UTF-8">
     <title>Gerenciar Clientes</title>
     <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
-   
-         
-    </script>
 </head>
 <body>
-    <h1>Lista de Clientes</h1>
-
-    {% if clientes %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Telefone</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cliente in clientes %}
-                <tr>
-                    <td>{{ cliente.id_cliente }}</td>
-                    <td>{{ cliente.nome }}</td>
-                    <td>{{ cliente.cpf }}</td>
-                    <td>{{ cliente.telefone }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'gerenciar_clientes' %}" onsubmit="confirmarAcao(event, this.acao.value)">
-                            {% csrf_token %}
-                            <input type="hidden" name="id_cliente" value="{{ cliente.id_cliente }}">
-                            <select name="acao">
-                                <option value="editar">Editar</option>
-                                <option value="deletar">Deletar</option>
-                            </select>
-                            <button type="submit">Executar</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Nenhum cliente cadastrado.</p>
-    {% endif %}
-
-    <footer>
-        <a href="{% url 'index' %}">Voltar ao Menu</a>
-    </footer>
+    <header>
+        <h1>Lista de Clientes</h1>
+    </header>
+    <main>
+        {% if clientes %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente.id_cliente }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.cpf }}</td>
+                        <td>{{ cliente.telefone }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'gerenciar_clientes' %}" onsubmit="confirmarAcao(event, this.acao.value)">
+                                {% csrf_token %}
+                                <input type="hidden" name="id_cliente" value="{{ cliente.id_cliente }}">
+                                <select name="acao">
+                                    <option value="editar">Editar</option>
+                                    <option value="deletar">Deletar</option>
+                                </select>
+                                <button type="submit">Executar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nenhum cliente cadastrado.</p>
+        {% endif %}
+    </main>
+    <div class='campo'>
+        <a href="{% url 'olhar_tabelas' %}">Voltar à página anterior</a>
+    </div>
 </body>
 </html>

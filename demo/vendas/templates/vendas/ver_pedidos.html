@@ -15,13 +15,13 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>ID Pedido</th>
+                    <th>ID</th>
                     <th>Cliente</th>
                     <th>Data</th>
-                    <th>Nome do Produto</th>
+                    <th>Produto</th>
                     <th>Quantidade</th>
-                    <th>Método de Pagamento</th>
-                    <th>Status de Pagamento</th>
+                    <th>Pagamento</th>
+                    <th>Status</th>
                     <th>Total</th>
                     <th>Ação</th> <!-- Nova coluna -->
                 </tr>
@@ -46,7 +46,7 @@
                                 <option value="editar">Editar</option>
                                 <option value="deletar">Deletar</option>
                             </select>
-                            <button type="submit">Executar Ação</button>
+                            <button type="submit">Executar Ação</button> 
                         </form>
                     </td>
                 </tr>
@@ -54,8 +54,8 @@
             </tbody>
         </table>
     </main>
-    <footer>
-        <a href="{% url 'olhar_tabelas' %}">Voltar para a página anterior</a>
-    </footer>
+    <div class='campo'>
+        <a href="{% url 'olhar_tabelas' %}">Voltar à página anterior</a>
+    </div>
 </body>
 </html>
