@@ -18,6 +18,11 @@
                 <div class="mensagem-sucesso">
                     <p>Cliente cadastrado com sucesso!</p>
                 </div>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = "{% url 'index' %}";
+                    }, 2000);
+                </script>
             {% endif %}
             
             <form method="POST">
