@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Pagamentos</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <h1>Editar Pagamentos</h1>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>ID Pedido</th>
+            <th>Valor</th>
+            <th>Método</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+        {% for pagamento in pagamentos %}
+        <tr>
+            <form method="POST">
+                {% csrf_token %}
+                <td>{{ pagamento.id_pagamento }}</td>
+                <td>{{ pagamento.idpedido.id_pedido }}</td>
+                <td>{{ pagamento.valor }}</td>
+                <td>
+                    <input type="hidden" name="id_pagamento" value="{{ pagamento.id_pagamento }}">
+                    <select name="metodo_de_pagamento">
+                        <option value="Cartão de Crédito" {% if pagamento.metodo_de_pagamento == "Cartão de Crédito" %}selected{% endif %}>Cartão de Crédito</option>
+                        <option value="Pix" {% if pagamento.metodo_de_pagamento == "Pix" %}selected{% endif %}>Pix</option>
+                        <option value="Boleto" {% if pagamento.metodo_de_pagamento == "Boleto" %}selected{% endif %}>Boleto</option>
+                        <option value="Dinheiro" {% if pagamento.metodo_de_pagamento == "Dinheiro" %}selected{% endif %}>Dinheiro</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="status_pagamento">
+                        <option value="Pendente" {% if pagamento.status_pagamento == "Pendente" %}selected{% endif %}>Pendente</option>
+                        <option value="Pago" {% if pagamento.status_pagamento == "Pago" %}selected{% endif %}>Pago</option>
+                        <option value="Cancelado" {% if pagamento.status_pagamento == "Cancelado" %}selected{% endif %}>Cancelado</option>
+                    </select>
+                </td>
+                <td><button type="submit">Atualizar</button></td>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <footer>
+        <a href="{% url 'index' %}">Voltar ao início</a>
+    </footer>
+</body>
+</html>
