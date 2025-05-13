@@ -397,3 +397,20 @@ def editar_pedido(request, id):
         "clientes": clientes,
         "produtos": produtos,
     })
+    
+def editar_pagamentos(request):
+    pagamentos = Pagamento.objects.all()
+
+    if request.method == 'POST':
+        pagamento_id = request.POST.get('id_pagamento')
+        novo_status = request.POST.get('status_pagamento')
+        novo_metodo = request.POST.get('metodo_de_pagamento')
+
+        pagamento = Pagamento.objects.get(id_pagamento=pagamento_id)
+        pagamento.status_pagamento = novo_status
+        pagamento.metodo_de_pagamento = novo_metodo
+        pagamento.save(update_fields=['status_pagamento', 'metodo_de_pagamento'])
+
+        return redirect('editar_pagamentos')
+
+    return render(request, 'vendas/editar_pagamentos.html', {'pagamentos': pagamentos})

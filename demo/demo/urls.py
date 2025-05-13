@@ -23,6 +23,6 @@ urlpatterns = [
    path('editar_cliente/editar/<int:id_cliente>/', views.editar_cliente, name='editar_cliente'),
    path('pedidos/acao/<int:id_pedido>/', views.escolher_acao_pedido, name='escolher_acao_pedido'),
    path('pedidos/editar/<int:id>/', views.editar_pedido, name='editar_pedido'),
-
+   path('pagamentos/', views.editar_pagamentos, name='editar_pagamentos'), 
 ]
 
