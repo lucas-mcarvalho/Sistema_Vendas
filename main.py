@@ -35,14 +35,14 @@ pedidos_2025 = cur.fetchall()
 for linha in pedidos_2025:
     print(linha)
 
-print("\nPedidos feitos no dia 23 de abril: ")
+print("\nPedidos feitos no mes de abril: ")
 cur.execute("""
     SELECT * FROM PEDIDOS
     WHERE EXTRACT(MONTH FROM data_pedido) = 4;
 """)
 
-pedidos_23_abril = cur.fetchall()
-for linha in pedidos_23_abril:
+pedidos_abril = cur.fetchall()
+for linha in pedidos_abril:
     print(linha)
 
 # 2. Realizar consultas com operadores relacionais e operadores lógicos;
