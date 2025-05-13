@@ -43,36 +43,13 @@
                         {% endfor %}
                     </select>
 
-                    <input type="number" name="quantidade" value="{{ quantidade }}" min="1">
-                </div>
-                
-                <div class="campo">
                     <label for="quantidade">Quantidade:</label>
-                    <input type="number" name="quantidade" value="{{ pedido.quantidade }}" min="1">
+                    <input type="number" name="quantidade" value="{{ quantidade }}" min="1">
                 </div>
                 
                 <div class="campo">
                     <label for="data_pedido">Data do Pedido:</label>
                     <input type="date" name="data_pedido" value="{{ pedido.data_pedido }}">
-                </div>
-
-                <div class="campo">
-                    <label for="metodo_pagamento">Método de Pagamento:</label>
-                    <select name="metodo_pagamento">
-                        <option value="Pix" {% if pedido.metodo_pagamento == "Pix" %}selected{% endif %}>Pix</option>
-                        <option value="Cartão de Crédito" {% if pedido.metodo_pagamento == "Cartão de Crédito" %}selected{% endif %}>Cartão de Crédito</option>
-                        <option value="Boleto" {% if pedido.metodo_pagamento == "Boleto" %}selected{% endif %}>Boleto</option>
-                        <option value="Dinheiro" {% if pedido.metodo_pagamento == "Dinheiro" %}selected{% endif %}>Dinheiro</option>
-                    </select>
-                </div>
-                
-                <div class="campo">
-                    <label for="status_pagamento">Status do Pagamento:</label>
-                    <select name="status_pagamento">
-                        <option value="Pendente" {% if pedido.status_pagamento == "Pendente" %}selected{% endif %}>Pendente</option>
-                        <option value="Pago" {% if pedido.status_pagamento == "Pago" %}selected{% endif %}>Pago</option>
-                        <option value="Cancelado" {% if pedido.status_pagamento == "Cancelado" %}selected{% endif %}>Cancelado</option>
-                    </select>
                 </div>
                 
                 <button type="submit">Salvar</button>

@@ -339,7 +339,6 @@ def editar_pedido(request, id):
     sucesso = False
     pedido = get_object_or_404(Pedido, id_pedido=id)
     item_pedido = Itens_Pedido.objects.filter(idpedido=pedido).first()
-    itens_pedido = Itens_Pedido.objects.filter(idpedido=pedido)
     clientes = Cliente.objects.all()
     produtos = Produto.objects.all()
 
@@ -367,16 +366,6 @@ def editar_pedido(request, id):
             quantidade = int(quantidade)
         else:
             quantidade = 1  # Valor padrão
-
-        # Buscar método de pagamento
-        metodo_pagamento = request.POST.get("metodo_pagamento")
-        if metodo_pagamento:
-            pedido.metodo_pagamento = metodo_pagamento
-
-        # Buscar status de pagamento
-        status_pagamento = request.POST.get("status_pagamento")
-        if status_pagamento:
-            pedido.status_pagamento = status_pagamento
 
         # Atualizar ou criar item de pedido
         if produto:
@@ -413,7 +402,6 @@ def editar_pedido(request, id):
         return render(request, "vendas/editar_pedido.html", {
             "pedido": pedido,
             "clientes": clientes,
-            "itens_pedido": itens_pedido,
             "produtos": produtos,
             'sucesso': sucesso
         })
@@ -424,6 +412,5 @@ def editar_pedido(request, id):
         "produtos": produtos,
         "quantidade": item_pedido.quantidade if item_pedido else '',
         "id_produto": item_pedido.idproduto.id_produto if item_pedido else '',
-        "itens_pedido": itens_pedido,
         'sucesso': sucesso
     })
