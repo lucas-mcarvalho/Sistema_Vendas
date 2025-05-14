@@ -244,6 +244,44 @@ cur.execute("""
 print("\nALL")
 mostrar_resultado(cur, "Fornecedores que possuem produtos com preco maior que o segundo fornecedor:")
 
+
+print("\n")
+#11. EXISTS E UNIQUE
+cur.execute("""
+            SELECT *FROM fornecedor f
+            WHERE EXISTS(
+                SELECT 1 FROM produtos p
+                WHERE p.idfornecedor = f.id_fornecedor 
+            )
+            """)
+mostrar_resultado(cur, "Fornecedores que possuem amo menos um produto cadastrado:")
+
+#12. Comandos AVG, MIN, MAX, SUM, COUNT.
+print("\nAVG")
+cur.execute("""
+            SELECT AVG(preco) AS media_preco FROM produtos
+            """)
+mostrar_resultado(cur, "Media de preco entre os produtos: ")
+
+print("\nMIN")
+
+cur.execute("""
+            SELECT MIN(preco) AS menor_preco FROM produtos
+            """)
+mostrar_resultado(cur, "Menor preco entre os produtos: ")
+
+print("\nSUM")
+cur.execute("""
+            SELECT SUM(preco) AS soma_dos_precos FROM produtos
+            """)
+mostrar_resultado(cur, "Soma dos precos entre os produtos: ")
+
+print("\nCount")
+cur.execute("""
+            SELECT COUNT(preco) AS numero_de_produtos FROM produtos
+            """)
+mostrar_resultado(cur, "Total de  Produtos: ")
+
 #commit the transiction
 # conn.commit()
 
