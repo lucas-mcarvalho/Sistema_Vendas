@@ -10,9 +10,9 @@ def mostrar_resultado(cursor, descricao):
 
 #connect to the db
 conn = psycopg2.connect(
-    dbname="Vendas",
+    dbname="postgres",
     user="postgres",
-    password="database123",
+    password="85016244",
     host="localhost",
     port="5432"
 )
@@ -155,6 +155,94 @@ cur.execute("""
 mostrar_resultado(cur, "Clientes que nao sao fornecedores")
 
 
+#7 .Utilizar operadores between e like
+print("\nBetween")
+cur.execute("""
+            SELECT * FROM 
+            fornecedor WHERE
+            id_fornecedor BETWEEN 2 and 4
+            """)
+mostrar_resultado(cur, "Fornecedores com id entre 2 e 4")
+
+
+print("\nLike")
+cur.execute("""
+            SELECT *FROM
+            cliente WHERE nome
+            LIKE '%c%'
+            """)
+
+mostrar_resultado(cur, "Clientes que tem a letra c")
+cur.execute("""
+            SELECT *FROM
+            cliente WHERE nome
+            LIKE 'c%'
+            """)
+mostrar_resultado(cur, "Clientes que comecam com a letra c")
+
+
+print("\nOrderBY")
+#8 OrderBY  crescente e decrescente
+cur.execute(""" 
+            SELECT *FROM 
+            produtos ORDER BY
+            nome_produto
+            """)
+mostrar_resultado(cur, "Produtos ordenados em ordem alfabetica ,Crescente:")
+
+print("\n")
+cur.execute(""" 
+            SELECT *FROM 
+            produtos ORDER BY
+            nome_produto DESC
+            """)
+
+mostrar_resultado(cur, "Decrescente:")
+
+#9. Utilizando os comandos IS e NOT IS
+print("\nIS E NOT IS")
+cur.execute("""
+        SELECT *FROM fornecedor
+        WHERE email IS NULL    
+            """)
+mostrar_resultado(cur, "Fornecedores que tem email nulo:")
+
+cur.execute("""
+        SELECT *FROM fornecedor
+        WHERE email IS NOT NULL    
+            """)
+print("\n")
+mostrar_resultado(cur, "Fornecedores que nao possuem email nulo:")
+
+#10 . Utilizando IN,ANY E ALL
+cur.execute("""
+            SELECT *FROM fornecedor
+            where id_fornecedor IN(
+                SELECT id_fornecedor FROM produtos
+            )
+            """)
+print("\nIN")
+mostrar_resultado(cur, "Fornecedores que possuem produtos :")
+
+cur.execute("""
+            SELECT *FROM produtos
+            where preco > ANY(
+            SELECT preco FROM produtos
+            WHERE idfornecedor = 1    
+            )
+            """)
+print("\nANY")
+mostrar_resultado(cur, "Fornecedores que possuem produtos  com preco maior que o primeiro fornecedor:")
+
+cur.execute("""
+            SELECT *FROM produtos
+            where preco > ALL(
+            SELECT preco FROM produtos
+            WHERE idfornecedor = 2    
+            )
+            """)
+print("\nALL")
+mostrar_resultado(cur, "Fornecedores que possuem produtos com preco maior que o segundo fornecedor:")
 
 #commit the transiction
 # conn.commit()
