@@ -37,9 +37,9 @@ class Pedido(models.Model):
     
 class Fornecedor(models.Model):
     id_fornecedor = models.AutoField(primary_key=True)
-    nome_fornecedor = models.CharField(max_length=100)
+    nome_fornecedor = models.CharField(null=True,max_length=100)
     email = models.CharField(null = True,max_length=60)
-    telefone_fornecedor = models.CharField(max_length=15)
+    telefone_fornecedor = models.CharField(null=True,max_length=15)
 
     class Meta:
         managed = False 

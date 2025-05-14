@@ -20,9 +20,9 @@ def cadastro_cliente(request):
 
 def criar_novo_fornecedor(request):
     if request.method == 'POST':
-        nome_fornecedor = request.POST.get('nome_fornecedor')
+        nome_fornecedor = request.POST.get('nome_fornecedor') or None
         email = request.POST.get('email') or None
-        telefone_fornecedor = request.POST.get('telefone_fornecedor')
+        telefone_fornecedor = request.POST.get('telefone_fornecedor') or None
 
         fornecedor = Fornecedor(nome_fornecedor=nome_fornecedor, email=email, telefone_fornecedor=telefone_fornecedor)
         fornecedor.save()
