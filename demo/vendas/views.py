@@ -183,6 +183,7 @@ def adicionar_itens(request, id_pedido):
         'itens': itens
     })
 
+
 def olhar_tabelas(request):
     return render(request, 'vendas/olhar_tabelas.html')
 

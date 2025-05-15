@@ -52,8 +52,14 @@
                             <tr>
                                 <td>{{ item.nome_produto }}</td>
                                 <td>{{ item.quantidade }}</td>
-                                <td>R$ {{ item.preco_unitario|floatformat:2 }}</td>
-                                <td>R$ {{ item.subtotal|floatformat:2 }}</td>
+                                <td>
+                                    {% if forloop.counter == 3 %}
+                                        GRÁTIS
+                                    {% else %}
+                                        R$ {{ item.preco_unitario }}
+                                    {% endif %}
+                                </td>
+                                <td>R$ {{ item.subtotal }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

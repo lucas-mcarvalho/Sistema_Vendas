@@ -10,9 +10,9 @@ def mostrar_resultado(cursor, descricao):
 
 #connect to the db
 conn = psycopg2.connect(
-    dbname="postgres",
+    dbname="Vendas",
     user="postgres",
-    password="85016244",
+    password="database123",
     host="localhost",
     port="5432"
 )
