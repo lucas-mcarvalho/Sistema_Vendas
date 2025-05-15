@@ -45,12 +45,20 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3" style="text-align: right;"><strong>Total do Pedido:</strong></td>
-                            <td><strong>R$ {{ pedido.total|floatformat:2 }}</strong></td>
-                        </tr>
-                    </tfoot>
+                 <tfoot>
+    <tr>
+        <td colspan="3" style="text-align: right;">Total original:</td>
+        <td>R$ {{ total_original|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align: right;">Desconto aplicado:</td>
+        <td>- R$ {{ desconto|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align: right;"><strong>Total com desconto:</strong></td>
+        <td><strong>R$ {{ total_com_desconto|floatformat:2 }}</strong></td>
+    </tr>
+</tfoot>
                 </table>
                 <div class="campo">
                     <label for="p17">Método de pagamento:</label><br>

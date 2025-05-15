@@ -37,6 +37,13 @@
                 <button type="submit">Adicionar item</button><br><br>
 
                 {% if inserido %}
+
+                {% if terceiro_gratis %}
+            <div class="mensagem-desconto">
+          <p><strong>Parabéns! O terceiro item do pedido sairá de graça. O desconto será aplicado no pagamento.</strong></p>
+                 </div>
+{% endif %}
+
                     <h2>Itens do Pedido #{{ pedido.id_pedido }}</h2>
                     <table border="1">
                         <thead>
