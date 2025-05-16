@@ -118,3 +118,13 @@ select {
     background-color: #fff;
     margin-right: 0.3rem;
 }
+
+.mensagem-desconto {
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #d4edda;
+    border: 1px solid #28a745;
+    color: #155724;
+    font-weight: bold;
+    border-radius: 5px;
+}

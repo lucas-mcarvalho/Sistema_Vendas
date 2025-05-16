@@ -111,34 +111,55 @@ def verificar_pagamento(request, id_pedido):
             'subtotal': subtotal
         })
 
-    if request.method=='POST':
+    # Total e desconto
+    total_original = sum(item['subtotal'] for item in itens)
+    desconto = 0
+    if len(itens) >= 3:
+        item_mais_barato = min(itens, key=lambda x: x['preco_unitario'])
+        desconto = item_mais_barato['preco_unitario']
+    
+    total_com_desconto = total_original - desconto
+
+    if request.method == 'POST':
         metodo_de_pagamento = request.POST.get('metodo_pagamento')
         status_do_pagamento = request.POST.get('status_pagamento')
 
+    
         try:
-            valor = pedido.total
-            pagamento = Pagamento(idpedido=pedido, valor=valor, metodo_de_pagamento=metodo_de_pagamento, status_pagamento=status_do_pagamento)
+            pagamento = Pagamento(
+                idpedido=pedido,
+                valor=total_com_desconto,  # APLICANDO o desconto aqui!
+                metodo_de_pagamento=metodo_de_pagamento,
+                status_pagamento=status_do_pagamento
+            )
             pagamento.save()
             sucesso = True
         except Pedido.DoesNotExist:
-            # Fornecedor nao encontrado
             sucesso = False
 
         return render(request, 'vendas/verificar_pagamento.html', {
             'pedido': pedido,
             'sucesso': sucesso,
-            'itens': itens
+            'itens': itens,
+            'total_original': total_original,
+            'desconto': desconto,
+            'total_com_desconto': total_com_desconto
         })
 
     return render(request, 'vendas/verificar_pagamento.html', {
-            'pedido': pedido,
-            'sucesso': sucesso,
-            'itens': itens
+        'pedido': pedido,
+        'sucesso': sucesso,
+        'itens': itens,
+        'total_original': total_original,
+        'desconto': desconto,
+        'total_com_desconto': total_com_desconto
     })
+
 
 
 def adicionar_itens(request, id_pedido):
     inserido = False
+    terceiro_gratis = False  # <== novo
     pedido = Pedido.objects.get(id_pedido=id_pedido)
     produtos = Produto.objects.all()
     itens = []
@@ -156,31 +177,36 @@ def adicionar_itens(request, id_pedido):
             quantidade=quantidade
         )
 
-        # Recalcular o total do pedido
-        itens_query = Itens_Pedido.objects.filter(idpedido=pedido)
-
-        for item in itens_query:    
-            produto = item.idproduto
-            subtotal = produto.preco * item.quantidade
-            itens.append({
-                'nome_produto': produto.nome_produto,
-                'quantidade': item.quantidade,
-                'preco_unitario': produto.preco,
-                'subtotal': subtotal
-            })
-
-        # Atualizar o total do pedido
-        total = sum(item['subtotal'] for item in itens)
-        pedido.total = total
-        pedido.save()
-
         inserido = True
+
+    # Atualiza a lista de itens independente do POST
+    itens_query = Itens_Pedido.objects.filter(idpedido=pedido)
+
+    for item in itens_query:    
+        produto = item.idproduto
+        subtotal = produto.preco * item.quantidade
+        itens.append({
+            'nome_produto': produto.nome_produto,
+            'quantidade': item.quantidade,
+            'preco_unitario': produto.preco,
+            'subtotal': subtotal
+        })
+
+    # Atualizar o total do pedido
+    total = sum(item['subtotal'] for item in itens)
+    pedido.total = total
+    pedido.save()
+
+    # Verifica se o terceiro item acabou de ser adicionado
+    if len(itens) == 3:
+        terceiro_gratis = True
 
     return render(request, 'vendas/adicionar_itens.html', {
         'pedido': pedido,
         'produtos': produtos,
         'inserido': inserido,
-        'itens': itens
+        'itens': itens,
+        'terceiro_gratis': terceiro_gratis  # passa para o template
     })
 
 

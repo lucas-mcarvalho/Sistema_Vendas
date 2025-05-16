@@ -26,7 +26,7 @@
                     {% csrf_token %}
                     <td>{{ pagamento.id_pagamento }}</td>
                     <td>{{ pagamento.idpedido.id_pedido }}</td>
-                    <td>{{ pagamento.valor }}</td>
+                    <td>R$ {{ pagamento.valor }}</td>
                     <td>
                         <input type="hidden" name="id_pagamento" value="{{ pagamento.id_pagamento }}">
                         <select name="metodo_de_pagamento">
