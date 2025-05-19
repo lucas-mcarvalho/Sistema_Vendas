@@ -39,10 +39,10 @@
                 {% if inserido %}
 
                 {% if terceiro_gratis %}
-            <div class="mensagem-desconto">
-          <p><strong>Parabéns! O terceiro item do pedido sairá de graça. O desconto será aplicado no pagamento.</strong></p>
-                 </div>
-{% endif %}
+                    <div class="mensagem-desconto">
+                        <p><strong>Parabéns! O terceiro item do pedido sairá de graça. O desconto será aplicado no pagamento.</strong></p>
+                    </div>
+                {% endif %}
 
                     <h2>Itens do Pedido #{{ pedido.id_pedido }}</h2>
                     <table border="1">
@@ -59,8 +59,14 @@
                             <tr>
                                 <td>{{ item.nome_produto }}</td>
                                 <td>{{ item.quantidade }}</td>
-                                <td>R$ {{ item.preco_unitario|floatformat:2 }}</td>
-                                <td>R$ {{ item.subtotal|floatformat:2 }}</td>
+                                <td>
+                                    {% if forloop.counter == 3 %}
+                                        GRÁTIS
+                                    {% else %}
+                                        R$ {{ item.preco_unitario }}
+                                    {% endif %}
+                                </td>
+                                <td>R$ {{ item.subtotal }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

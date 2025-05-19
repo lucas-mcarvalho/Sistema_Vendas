@@ -159,7 +159,7 @@ def verificar_pagamento(request, id_pedido):
 
 def adicionar_itens(request, id_pedido):
     inserido = False
-    terceiro_gratis = False  # <== novo
+    terceiro_gratis = False
     pedido = Pedido.objects.get(id_pedido=id_pedido)
     produtos = Produto.objects.all()
     itens = []
@@ -170,19 +170,24 @@ def adicionar_itens(request, id_pedido):
 
         produto = Produto.objects.get(id_produto=id_produto)
 
-        # Criar o item no banco de dados
-        Itens_Pedido.objects.create(
-            idpedido=pedido,
-            idproduto=produto,  
-            quantidade=quantidade
-        )
+        if produto.estoque >= quantidade:
+            produto.estoque -= quantidade
+            produto.save()
 
-        inserido = True
+            Itens_Pedido.objects.create(
+                idpedido=pedido,
+                idproduto=produto,  
+                quantidade=quantidade
+            )
 
-    # Atualiza a lista de itens independente do POST
+            inserido = True
+        else:
+            inserido = False  # estoque insuficiente
+
+    # Atualiza a lista de itens
     itens_query = Itens_Pedido.objects.filter(idpedido=pedido)
 
-    for item in itens_query:    
+    for item in itens_query:
         produto = item.idproduto
         subtotal = produto.preco * item.quantidade
         itens.append({
@@ -192,12 +197,10 @@ def adicionar_itens(request, id_pedido):
             'subtotal': subtotal
         })
 
-    # Atualizar o total do pedido
     total = sum(item['subtotal'] for item in itens)
     pedido.total = total
     pedido.save()
 
-    # Verifica se o terceiro item acabou de ser adicionado
     if len(itens) == 3:
         terceiro_gratis = True
 
@@ -206,8 +209,9 @@ def adicionar_itens(request, id_pedido):
         'produtos': produtos,
         'inserido': inserido,
         'itens': itens,
-        'terceiro_gratis': terceiro_gratis  # passa para o template
+        'terceiro_gratis': terceiro_gratis
     })
+
 
 def olhar_tabelas(request):
     return render(request, 'vendas/olhar_tabelas.html')

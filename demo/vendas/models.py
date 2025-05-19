@@ -33,7 +33,7 @@ class Pedido(models.Model):
         db_table = 'pedidos'
 
     def __str__(self):
-        return self.Pedido.id_pedido
+        return f'Pedido #{self.id_pedido}'
     
 class Fornecedor(models.Model):
     id_fornecedor = models.AutoField(primary_key=True)
@@ -46,7 +46,7 @@ class Fornecedor(models.Model):
         db_table = 'fornecedor'
 
     def __str__(self):
-        return f"({self.id}) {self.nome_fornecedor}: {self.telefone_fornecedor}"
+        return f"({self.id_fornecedor}) {self.nome_fornecedor}: {self.telefone_fornecedor}"
     
 class Produto(models.Model):
     id_produto = models.AutoField(primary_key=True)

@@ -46,19 +46,19 @@
                         {% endfor %}
                     </tbody>
                  <tfoot>
-    <tr>
-        <td colspan="3" style="text-align: right;">Total original:</td>
-        <td>R$ {{ total_original|floatformat:2 }}</td>
-    </tr>
-    <tr>
-        <td colspan="3" style="text-align: right;">Desconto aplicado:</td>
-        <td>- R$ {{ desconto|floatformat:2 }}</td>
-    </tr>
-    <tr>
-        <td colspan="3" style="text-align: right;"><strong>Total com desconto:</strong></td>
-        <td><strong>R$ {{ total_com_desconto|floatformat:2 }}</strong></td>
-    </tr>
-</tfoot>
+                        <tr>
+                            <td colspan="3" style="text-align: right;">Total original:</td>
+                            <td>R$ {{ total_original|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: right;">Desconto aplicado:</td>
+                            <td>- R$ {{ desconto|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: right;"><strong>Total com desconto:</strong></td>
+                            <td><strong>R$ {{ total_com_desconto|floatformat:2 }}</strong></td>
+                        </tr>
+                    </tfoot>
                 </table>
                 <div class="campo">
                     <label for="p17">Método de pagamento:</label><br>
@@ -86,13 +86,15 @@
                     <input type="radio" id="p18c" name="status_pagamento" value='Cancelado'>
                     <label for="p18c">Cancelado</label><br>
                 </div>
+                
                 <div class="campo">
-    <label for="aplicar_desconto">Aplicar desconto?</label><br>
-    <select name="aplicar_desconto" id="aplicar_desconto">
-        <option value="sim">Sim</option>
-        <option value="nao" selected>Não</option>
-    </select>
-</div>
+                    <label for="aplicar_desconto">Tem desconto?</label><br>
+                        {% if desconto == 0.00 %}
+                            <p>Não</p>
+                        {% else %}
+                            <p>Sim</p>
+                        {% endif %}
+                </div>
 
                 <button class="botao_cadastrar" type="submit">Cadastrar</button>
             </form>

@@ -9,6 +9,16 @@
 <body>
     <h1>Editar Cliente</h1>
     <main>
+        {% if sucesso %}
+                <div class="mensagem-sucesso">
+                    <p>Cliente editado com sucesso!</p>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = "{% url 'gerenciar_clientes' %}";
+                    }, 2000);
+                </script>
+        {% endif %}
         <form method="POST" action="{% url 'editar_cliente' cliente.id_cliente %}">
             {% csrf_token %}
             <div class="campo">
@@ -35,9 +45,5 @@
     <footer>
         <a href="{% url 'gerenciar_clientes' %}">Voltar à lista de clientes</a>
     </footer>
-<<<<<<< HEAD
-
-=======
->>>>>>> 558217f167999999b297d1eb5515baca0bcff502
 </body>
 </html>
