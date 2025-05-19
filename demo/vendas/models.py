@@ -129,4 +129,4 @@ class Pagamento(models.Model):
         db_table = 'pagamento'
 
     def __str__(self):
-        return f"ID do pedido: {self.idpedido} Valor: {self.valor} Metodo de Pagamento: {self.metodo_de_pagamento} Status do Pagamento: {self.status_pagamento}"
+        return f"ID do pedido: {self.idpedido} Valor: {self.valor} Metodo de Pagamento: {self.metodo_de_pagamento} Status do Pagamento: {self.status_pagamento}"  
