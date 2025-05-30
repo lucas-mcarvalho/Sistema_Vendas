@@ -135,7 +135,7 @@ sistema-vendas/
 - [ ] Exportação de relatórios em PDF ou Excel
 - [ ] Integração com gateway de pagamento externo
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
 - **Matheus Pontes**  
   📧 matheus.pontes@mail.uft.edu.br
