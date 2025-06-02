@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Pedidos</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Editar Pedido</h1>
+    </header>
+
+    <main>
+        <section>
+            {% if sucesso %} 
+                <div class="mensagem-sucesso">
+                    <p>Pedido editado com sucesso!</p>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = "{% url 'ver_pedidos' %}";
+                    }, 2000);
+                </script>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="campo">
+                    <label for="nome_cliente">Cliente:</label>
+                    <select name="nome_cliente">
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id_cliente }}" {% if pedido.idcliente.id_cliente == cliente.id_cliente %}selected{% endif %}>{{ cliente.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="campo">
+                    <label for="id_produto">Produto:</label>
+                    <select name="id_produto">
+                        {% for produto in produtos %}
+                            <option value="{{ produto.id_produto }}" {% if id_produto == produto.id_produto %}selected{% endif %}>{{ produto.nome_produto }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="quantidade">Quantidade:</label>
+                    <input type="number" name="quantidade" value="{{ quantidade }}" min="1">
+                </div>
+                
+                <div class="campo">
+                    <label for="data_pedido">Data do Pedido:</label>
+                    <input type="date" name="data_pedido" value="{{ pedido.data_pedido }}">
+                </div>
+                
+                <button type="submit">Salvar</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

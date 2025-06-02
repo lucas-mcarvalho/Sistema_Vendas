@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pedidos</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Lista de Pedidos</h1>
+    </header>
+    <main>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Data</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Pagamento</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Ação</th> <!-- Nova coluna -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for linha in dados %}
+                <tr>
+                    <td>{{ linha.id_pedido }}</td>
+                    <td>{{ linha.nome_cliente }}</td>
+                    <td>{{ linha.data_pedido }}</td>
+                    <td>{{ linha.id_produto }}</td>
+                    <td>{{ linha.quantidade }}</td>
+                    <td>{{ linha.metodo_pagamento }}</td>
+                    <td>{{ linha.status_pagamento }}</td>
+                    <td>R$ {{ linha.total }}</td>
+                    <td>
+                        <!-- Formulário para cada ação -->
+                        <form method="post" action="{% url 'escolher_acao_pedido' linha.id_pedido %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="id_pedido" value="{{ linha.id_pedido }}">
+                            <select name="acao">
+                                <option value="editar">Editar</option>
+                                <option value="deletar">Deletar</option>
+                            </select>
+                            <button type="submit">Executar Ação</button> 
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    <div class='campo'>
+        <a href="{% url 'olhar_tabelas' %}">Voltar à página anterior</a>
+    </div>
+</body>
+</html>

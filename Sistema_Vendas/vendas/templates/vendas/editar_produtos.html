@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produtos</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Editar Produtos</h1>
+    </header>
+
+    <main>
+        <section>
+            {% if sucesso %}
+                <div class="mensagem-sucesso">
+                    <p>Produto editado com sucesso!</p>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = "{% url 'ver_produtos' %}";
+                    }, 2000);
+                </script>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="campo">
+                    <label for="p4">Nome do Produto:</label>
+                    <input type="text" id="p4" name="nome_produto" value="{{ produto.nome_produto }}" placeholder="Digite o nome do produto aqui">
+                </div>
+
+                <div class="campo">
+                    <label for="p5">Fornecedor:</label>
+                    <select name="idfornecedor" required>
+                        {% for fornecedor in fornecedores %}
+                            <option value="{{ fornecedor.id_fornecedor }}" {% if fornecedor.id_fornecedor == produto.idfornecedor.id_fornecedor %}selected{% endif %}>
+                                {{ fornecedor.nome_fornecedor }}
+                            </option>                        
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="p9">Estoque:</label>
+                    <input type="number" id="p9" name="estoque" value="{{ produto.estoque }}" placeholder="Digite a quantidade no estoque">
+                </div>
+
+                <div class="campo">
+                    <label for="p10">Preço:</label>
+                    <input type="number" id="p10" name="preco" value="{{ produto.preco }}" placeholder="Digite o preço do produto">
+                </div>
+
+                <button class="botao_cadastrar" type="submit">Salvar Alterações</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

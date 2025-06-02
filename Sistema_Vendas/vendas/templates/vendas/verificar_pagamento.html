@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Cadastrar pagamento de um pedido</h1>
+    </header>
+    <main>
+        <section>
+            {% if sucesso %}
+                <div class="mensagem-sucesso">
+                    <p>Pagamento registrado com sucesso!</p>
+                    <script>
+                        setTimeout(function() {
+                            window.location.href = "{% url 'index' %}";
+                        }, 2000);
+                    </script>
+                </div>
+            {% endif %}
+            <form method='POST'>
+                {% csrf_token %}
+                <h2>Itens do Pedido #{{ pedido.id_pedido }}</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Valor Unitário</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in itens %}
+                        <tr>
+                            <td>{{ item.nome_produto }}</td>
+                            <td>{{ item.quantidade }}</td>
+                            <td>R$ {{ item.preco_unitario|floatformat:2 }}</td>
+                            <td>R$ {{ item.subtotal|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                 <tfoot>
+                        <tr>
+                            <td colspan="3" style="text-align: right;">Total original:</td>
+                            <td>R$ {{ total_original|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: right;">Desconto aplicado:</td>
+                            <td>- R$ {{ desconto|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: right;"><strong>Total com desconto:</strong></td>
+                            <td><strong>R$ {{ total_com_desconto|floatformat:2 }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="campo">
+                    <label for="p17">Método de pagamento:</label><br>
+                    <input type="radio" id="p17a" name="metodo_pagamento" value='Cartão de Crédito'>
+                    <label for="p17a">Cartão de Crédito</label><br>
+                
+                    <input type="radio" id="p17b" name="metodo_pagamento" value='Pix'>
+                    <label for="p17b">Pix</label><br>
+                
+                    <input type="radio" id="p17c" name="metodo_pagamento" value='Boleto'>
+                    <label for="p17c">Boleto</label><br>
+                
+                    <input type="radio" id="p17d" name="metodo_pagamento" value='Dinheiro'>
+                    <label for="p17d">Dinheiro</label><br>
+                </div>
+                
+                <div class="campo">
+                    <label for="p18">Status do pagamento:</label><br>
+                    <input type="radio" id="p18a" name="status_pagamento" value='Pendente'>
+                    <label for="p18a">Pendente</label><br>
+                
+                    <input type="radio" id="p18b" name="status_pagamento" value='Pago'>
+                    <label for="p18b">Pago</label><br>
+                
+                    <input type="radio" id="p18c" name="status_pagamento" value='Cancelado'>
+                    <label for="p18c">Cancelado</label><br>
+                </div>
+                
+                <div class="campo">
+                    <label for="aplicar_desconto">Tem desconto?</label><br>
+                        {% if desconto == 0.00 %}
+                            <p>Não</p>
+                        {% else %}
+                            <p>Sim</p>
+                        {% endif %}
+                </div>
+
+                <button class="botao_cadastrar" type="submit">Cadastrar</button>
+            </form>
+        </section>
+    </main>
+
+    <div class='campo'>
+        <a href="{% url 'adicionar_itens' pedido.id_pedido %}">Voltar à página anterior</a>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar itens ao pedido</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Adicione os produtos ao pedido</h1>
+    </header>
+
+    <main>
+        <section>
+            {% if sucesso %}
+                <div class="mensagem-sucesso">
+                    <p>Pedido criado com sucesso!</p>
+                </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id_pedido" value="{{ pedido.id_pedido }}">
+            
+                <label for="produto">Produto:</label>
+                <select name="id_produto">
+                    {% for produto in produtos %}
+                        <option value="{{ produto.id_produto }}">{{ produto.nome_produto }}</option>
+                    {% endfor %}
+                </select>
+            
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" name="quantidade" min="1">
+            
+                <button type="submit">Adicionar item</button><br><br>
+
+                {% if inserido %}
+
+                {% if terceiro_gratis %}
+                    <div class="mensagem-desconto">
+                        <p><strong>Parabéns! O terceiro item do pedido sairá de graça. O desconto será aplicado no pagamento.</strong></p>
+                    </div>
+                {% endif %}
+
+                    <h2>Itens do Pedido #{{ pedido.id_pedido }}</h2>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Valor Unitário</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in itens %}
+                            <tr>
+                                <td>{{ item.nome_produto }}</td>
+                                <td>{{ item.quantidade }}</td>
+                                <td>
+                                    {% if forloop.counter == 3 %}
+                                        GRÁTIS
+                                    {% else %}
+                                        R$ {{ item.preco_unitario }}
+                                    {% endif %}
+                                </td>
+                                <td>R$ {{ item.subtotal }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="text-align: right;"><strong>Total do Pedido:</strong></td>
+                                <td><strong>R$ {{ pedido.total|floatformat:2 }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <br>
+                    <a href="{% url 'verificar_pagamento' pedido.id_pedido %}">Finalizar Pedido</a>
+                {% endif %}
+            </form>
+        </section>
+    </main>
+
+
+    <footer>
+        <a href="{% url 'index' %}" target="_self">
+            Voltar a pagina inicial.
+        </a>
+    </footer>
+    
+</body>
+</html>

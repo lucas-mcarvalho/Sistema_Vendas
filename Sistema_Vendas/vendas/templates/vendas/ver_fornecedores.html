@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Fornecedores</title>
+    <link rel="stylesheet" href="{% static 'vendas/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Lista de Fornecedores</h1>
+    </header>
+    <main>
+        <section>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>   
+                </thead>
+                <tbody>
+                    {% for fornecedor in fornecedores %}
+                    <tr>
+                        <td>{{ fornecedor.id_fornecedor }}</td>
+                        <td>{{ fornecedor.nome_fornecedor }}</td>
+                        <td>{{ fornecedor.email }}</td>
+                        <td>{{ fornecedor.telefone_fornecedor }}</td>
+                        <td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id_fornecedor" value="{{ fornecedor.id_fornecedor }}">
+                                <select name="acao">
+                                    <option value="editar">Editar</option>
+                                    <option value="deletar">Deletar</option>
+                                </select>
+                                <button type="submit">Executar Ação</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <div class='campo'>
+        <a href="{% url 'olhar_tabelas' %}">Voltar à página anterior</a>
+    </div>
+</body>
+</html>
